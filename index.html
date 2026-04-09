@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michelle Verhoef | VIVE & She Fights Back</title>
+  <link rel="icon" type="image/jpeg" href="/VIVE_logo2.jpg" />
+  <meta name="description" content="VIVE bokstraining voor iedereen en She Fights Back — 8-weekse zelfverdedigingscursus voor vrouwen. Door Michelle Verhoef." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --dark:        #151518;
+      --gray:        #1e1e22;
+      --vive-yellow: #FFE600;
+      --vive-gold:   #FFE600;
+      --sfb-pink:    #FF44CC;
+      --sfb-deep:    #7A1460;
+      --white:       #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* Focus visible for keyboard users */
+    :focus-visible {
+      outline: 2px solid var(--sfb-pink);
+      outline-offset: 3px;
+    }
+
+    /* ─── SCROLL PROGRESS BAR ─── */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; z-index: 2000;
+      height: 3px; width: 0%;
+      background: linear-gradient(90deg, var(--vive-yellow), var(--sfb-pink));
+      transition: width .1s linear;
+    }
+
+    /* ─── BACK TO TOP ─── */
+    #back-top {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 900;
+      width: 46px; height: 46px;
+      background: linear-gradient(135deg, var(--vive-yellow), var(--sfb-pink));
+      border: none; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity .3s, transform .3s;
+      box-shadow: 0 4px 20px rgba(255,45,120,.35);
+    }
+    #back-top.show { opacity: 1; pointer-events: auto; transform: none; }
+    #back-top:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(255,45,120,.5); }
+    #back-top svg { width: 20px; height: 20px; fill: #fff; }
+
+    /* ─── NAV ─── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.5rem 5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: all .35s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(8,8,8,.94);
+      backdrop-filter: blur(20px);
+      padding: 1rem 5rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.5rem; letter-spacing: 3px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,.55);
+      text-decoration: none; font-size: .78rem;
+      font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase;
+      transition: color .25s; position: relative; padding-bottom: 2px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 1px; background: var(--vive-yellow);
+      transform: scaleX(0); transform-origin: left; transition: transform .3s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active { color: #fff; }
+    .nav-cta {
+      background: var(--sfb-pink) !important;
+      color: #fff !important; padding: .55rem 1.4rem !important;
+      border-radius: 3px; letter-spacing: 1.5px !important;
+    }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { opacity: .9; }
+
+    /* ─── HAMBURGER ─── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: #fff; transition: all .3s; border-radius: 2px; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 999;
+      background: rgba(8,8,8,.97); backdrop-filter: blur(20px);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.8rem;
+      transform: translateX(100%); transition: transform .4s cubic-bezier(.77,0,.175,1);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu a {
+      font-family: 'Bebas Neue', cursive; font-size: 3.2rem;
+      color: #fff; text-decoration: none; letter-spacing: 4px;
+      transition: color .25s;
+    }
+    .mobile-menu a:hover { color: var(--sfb-pink); }
+    .mobile-close {
+      position: absolute; top: 1.5rem; right: 2rem;
+      background: none; border: none; color: rgba(255,255,255,.5);
+      font-size: 1.8rem; cursor: pointer; line-height: 1;
+      transition: color .2s;
+    }
+    .mobile-close:hover { color: #fff; }
+
+    /* ─── SECTION INDICATOR DOTS ─── */
+    .nav-dots {
+      position: fixed; right: 1.6rem; top: 50%; transform: translateY(-50%);
+      z-index: 800; display: flex; flex-direction: column; align-items: flex-end; gap: 0;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 30px;
+      padding: .7rem .55rem;
+      backdrop-filter: blur(8px);
+    }
+    .nav-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,.25);
+      cursor: pointer; border: none;
+      transition: all .3s ease; position: relative;
+      margin: .45rem 0; flex-shrink: 0;
+      outline: none;
+    }
+    /* Label links van de dot */
+    .nav-dot::before {
+      content: attr(data-label);
+      position: absolute; right: calc(100% + 12px); top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      font-size: .65rem; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+      background: rgba(21,21,24,.85);
+      padding: .3rem .7rem; border-radius: 4px;
+      border: 1px solid rgba(255,255,255,.08);
+      opacity: 0; transition: opacity .25s, transform .25s;
+      transform: translateY(-50%) translateX(4px);
+      pointer-events: none;
+    }
+    .nav-dot:hover::before {
+      opacity: 1; transform: translateY(-50%) translateX(0);
+    }
+    .nav-dot.active::before {
+      opacity: 1; transform: translateY(-50%) translateX(0);
+      color: #fff;
+      border-color: rgba(255,230,0,.3);
+    }
+    .nav-dot:hover {
+      background: rgba(255,255,255,.6);
+      transform: scale(1.3);
+    }
+    .nav-dot.active {
+      background: var(--vive-yellow);
+      transform: scale(1.25);
+      box-shadow: 0 0 8px rgba(255,230,0,.6);
+    }
+    @media (max-width: 960px) { .nav-dots { display: none; } }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative; height: 100vh; min-height: 600px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    #hero-canvas { position: absolute; inset: 0; z-index: 0; }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse at 50% 55%, rgba(230,57,70,.09) 0%, transparent 70%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; padding: 2rem; max-width: 900px;
+    }
+    .hero-eyebrow {
+      font-size: .78rem; letter-spacing: 7px; text-transform: uppercase;
+      color: var(--vive-gold); margin-bottom: 1.6rem;
+      opacity: 0; animation: fadeUp .8s .3s forwards;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(4.5rem, 14vw, 13rem);
+      line-height: .88; letter-spacing: 4px; margin-bottom: 1.8rem;
+      opacity: 0; animation: fadeUp .8s .55s forwards;
+    }
+    .line-vive { display: block; color: #fff; }
+    .line-amp { display: block; font-size: clamp(1.8rem, 4vw, 4rem); color: rgba(255,255,255,.12); }
+    .line-sfb {
+      display: block;
+      background: linear-gradient(135deg, var(--sfb-pink), var(--sfb-deep));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,.55);
+      letter-spacing: .5px; margin-bottom: 2.8rem; line-height: 1.6;
+      opacity: 0; animation: fadeUp .8s .75s forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp .8s .95s forwards;
+    }
+
+    /* ─── BUTTONS ─── */
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: 1rem 2.4rem;
+      font-size: .82rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: all .3s ease; position: relative; overflow: hidden;
+    }
+    .btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,.1);
+      transform: translateX(-110%); transition: transform .3s ease;
+    }
+    .btn:hover::after { transform: translateX(0); }
+    .btn-red {
+      background: var(--vive-yellow); color: #080808;
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+      font-weight: 800;
+    }
+    .btn-outline-pink {
+      background: transparent; color: var(--sfb-pink);
+      border: 2px solid var(--sfb-pink);
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    }
+    .btn-outline-pink:hover { background: var(--sfb-pink); color: #fff; }
+    .btn-gradient {
+      background: linear-gradient(135deg, var(--vive-yellow), var(--sfb-pink));
+      color: #fff; border-radius: 3px;
+      box-shadow: 0 4px 20px rgba(255,45,120,.3);
+    }
+    .btn-gradient:hover { box-shadow: 0 6px 28px rgba(255,45,120,.5); transform: translateY(-2px); }
+    .btn-white {
+      background: #fff; color: #080808;
+      border-radius: 3px; font-weight: 700;
+    }
+    .btn-white:hover { background: rgba(255,255,255,.88); }
+
+    /* ─── SCROLL HINT ─── */
+    .scroll-hint {
+      position: absolute; bottom: 2.2rem; left: 50%;
+      transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      opacity: 0; animation: fadeIn 1s 1.8s forwards;
+    }
+    .scroll-hint span { font-size: .62rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,.25); }
+    .scroll-line { width: 1px; height: 55px; background: linear-gradient(to bottom, rgba(255,255,255,.3), transparent); animation: scrollPulse 2.2s infinite; }
+
+    /* ─── STATS BAND ─── */
+    .stats-band {
+      background: var(--vive-yellow); padding: 2rem 5rem;
+      display: flex; justify-content: center; gap: 5rem; flex-wrap: wrap;
+      color: #080808;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Bebas Neue', cursive; font-size: 3.2rem; display: block; line-height: 1; color: #080808; }
+    .stat-lbl { font-size: .7rem; letter-spacing: 2.5px; text-transform: uppercase; opacity: .75; color: #080808; }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 9rem 5rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-tag {
+      display: block; font-size: .72rem; letter-spacing: 6px;
+      text-transform: uppercase; color: var(--vive-gold); margin-bottom: .9rem;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', cursive;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: .9; letter-spacing: 2px; margin-bottom: 1.8rem;
+    }
+    .body-text { color: rgba(255,255,255,.72); line-height: 1.85; font-size: 1.05rem; margin-bottom: 2.2rem; }
+    .body-text strong { color: #fff; }
+
+    /* ─── VIVE ─── */
+    #vive { background: var(--gray); position: relative; overflow: hidden; }
+    #vive::before {
+      content: 'VIVE'; position: absolute; right: -1rem; top: 50%;
+      transform: translateY(-50%); font-family: 'Bebas Neue', cursive;
+      font-size: 22rem; line-height: 1; color: rgba(230,57,70,.04); pointer-events: none;
+    }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2.5rem; }
+    .fcard {
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07);
+      padding: 1.5rem; border-radius: 6px;
+      transition: all .3s ease; position: relative; overflow: hidden;
+    }
+    .fcard::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--vive-yellow), transparent);
+      transform: scaleX(0); transform-origin: left; transition: transform .35s ease;
+    }
+    .fcard:hover::after { transform: scaleX(1); }
+    .fcard:hover { background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.12); transform: translateY(-2px); }
+    .fcard-icon { font-size: 2rem; margin-bottom: .7rem; }
+    .fcard-title {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase; color: var(--vive-yellow); margin-bottom: .4rem;
+    }
+    .fcard-text { font-size: .88rem; color: rgba(255,255,255,.55); line-height: 1.65; }
+    .vive-visual { animation: float 7s ease-in-out infinite; }
+    .vive-badge {
+      background: var(--vive-yellow); color: #080808; padding: 3rem;
+      clip-path: polygon(18px 0%, 100% 0%, calc(100% - 18px) 100%, 0% 100%);
+    }
+    .vive-badge-big { font-family: 'Bebas Neue', cursive; font-size: 6.5rem; line-height: 1; display: block; color: #080808; }
+    .vive-badge-sub { font-size: .9rem; letter-spacing: 3px; text-transform: uppercase; opacity: .7; color: #080808; }
+    .vive-quote { margin-top: 1.5rem; padding: 2rem; border: 1px solid rgba(230,57,70,.2); border-radius: 6px; }
+    .vive-quote p { font-size: 1.1rem; font-style: italic; color: rgba(255,255,255,.7); line-height: 1.7; }
+    .vive-quote cite { display: block; margin-top: .9rem; font-size: .8rem; color: var(--vive-yellow); letter-spacing: 2px; text-transform: uppercase; font-style: normal; }
+
+    /* ─── SHE FIGHTS BACK ─── */
+    #sfb { background: #12101c; position: relative; overflow: hidden; }
+    #sfb::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 75% 50%, rgba(255,45,120,.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .sfb-tag { color: var(--sfb-pink) !important; }
+    .sfb-title-grad {
+      background: linear-gradient(135deg, #fff 30%, var(--sfb-pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .week-list { margin-top: 2rem; display: flex; flex-direction: column; gap: .8rem; }
+    .witem {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding: 1rem 1.5rem;
+      border: 1px solid rgba(255,45,120,.13); border-radius: 6px;
+      transition: all .3s ease; cursor: default;
+    }
+    .witem:hover {
+      background: rgba(255,45,120,.06); border-color: rgba(255,45,120,.4);
+      transform: translateX(8px);
+    }
+    .wnum { font-family: 'Bebas Neue', cursive; font-size: 2.2rem; color: var(--sfb-pink); min-width: 3.5rem; }
+    .wtext { font-size: .9rem; color: rgba(255,255,255,.7); line-height: 1.45; }
+    .wtext strong { display: block; color: #fff; font-size: .95rem; margin-bottom: .15rem; }
+    .sfb-cta {
+      background: linear-gradient(135deg, rgba(255,45,120,.1), rgba(139,26,74,.1));
+      border: 1px solid rgba(255,45,120,.2); padding: 3rem; border-radius: 10px; text-align: center;
+    }
+    .sfb-cta h3 { font-family: 'Bebas Neue', cursive; font-size: 3rem; letter-spacing: 2px; margin-bottom: 1rem; line-height: 1; }
+    .sfb-cta p { color: rgba(255,255,255,.65); margin-bottom: 2rem; line-height: 1.75; }
+    .sfb-cta-note { margin-top: 1.4rem; font-size: .78rem; color: rgba(255,255,255,.35); }
+    .sfb-quote { margin-top: 2rem; padding: 1.5rem; border-left: 3px solid var(--sfb-pink); }
+    .sfb-quote p { font-size: .9rem; font-style: italic; color: rgba(255,255,255,.62); line-height: 1.7; }
+    .sfb-quote cite { display: block; margin-top: .8rem; font-size: .78rem; color: var(--sfb-pink); letter-spacing: 2px; text-transform: uppercase; font-style: normal; }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--gray); padding: 8rem 5rem; }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+    }
+    .contact-items { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+    .citem {
+      display: flex; align-items: center; gap: 1.2rem;
+      padding: 1.2rem 1.5rem;
+      background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07);
+      border-radius: 8px; text-decoration: none; color: inherit;
+      transition: all .3s; position: relative; overflow: hidden;
+    }
+    .citem::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(to bottom, var(--vive-yellow), var(--sfb-pink));
+      transform: scaleY(0); transform-origin: top; transition: transform .3s;
+    }
+    .citem:hover::before { transform: scaleY(1); }
+    .citem:hover { background: rgba(255,255,255,.055); border-color: rgba(255,255,255,.14); transform: translateX(4px); }
+    .citem-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .citem-label { font-size: .72rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: .2rem; }
+    .citem-value { font-size: .95rem; color: #fff; font-weight: 500; }
+
+    .contact-form { background: rgba(255,255,255,.02); border: 1px solid rgba(255,255,255,.07); padding: 2.5rem; border-radius: 10px; }
+    .contact-form h3 { font-family: 'Bebas Neue', cursive; font-size: 2.5rem; letter-spacing: 2px; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: .75rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: .5rem; }
+    .form-group input,
+    .form-group textarea {
+      width: 100%; padding: .85rem 1rem;
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 4px; color: #fff; font-family: 'Inter', sans-serif; font-size: .95rem;
+      transition: border-color .25s;
+      resize: vertical;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus { outline: none; border-color: var(--vive-yellow); background: rgba(255,255,255,.07); }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,.25); }
+    .form-group textarea { min-height: 120px; }
+    .form-submit { width: 100%; padding: 1rem; margin-top: .5rem; }
+
+    /* ─── TIKTOK VIDEOS ─── */
+    #videos { background: var(--gray); padding: 9rem 5rem; }
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .video-card {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform .3s, border-color .3s;
+      position: relative;
+    }
+    .video-card:hover { transform: translateY(-6px); border-color: rgba(255,45,120,.3); }
+    /* TikTok embed wrapper: force consistent height */
+    .video-card .tiktok-embed { margin: 0 !important; }
+    /* Placeholder card shown before real videos are added */
+    .video-placeholder {
+      aspect-ratio: 9/16;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1rem; padding: 2rem; text-align: center;
+      background: linear-gradient(160deg, #1a1a1a, #0d0d0d);
+    }
+    .video-placeholder svg { width: 48px; height: 48px; opacity: .3; }
+    .video-placeholder p { font-size: .85rem; color: rgba(255,255,255,.3); line-height: 1.5; }
+    .video-placeholder span { font-family: 'Bebas Neue', cursive; font-size: 1.4rem; letter-spacing: 2px; color: rgba(255,255,255,.15); }
+    .videos-cta { text-align: center; margin-top: 3rem; }
+    @media (max-width: 960px) { .videos-grid { grid-template-columns: 1fr 1fr; } #videos { padding: 6rem 1.8rem; } }
+    @media (max-width: 600px) { .videos-grid { grid-template-columns: 1fr; } }
+
+    /* ─── SOCIALS ─── */
+    #social { background: var(--dark); text-align: center; padding: 8rem 5rem; }
+    #social .section-tag { color: rgba(255,255,255,.3); }
+    .social-cards { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 3rem; }
+    .tt-wrapper {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 1.5rem;
+      padding: 3.5rem 5rem;
+      border: 1px solid rgba(255,255,255,.08); border-radius: 16px;
+      background: rgba(255,255,255,.02); text-decoration: none; color: #fff;
+      transition: all .35s ease; position: relative; overflow: hidden;
+    }
+    .tt-wrapper::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,45,120,.06), rgba(139,26,74,.06));
+      opacity: 0; transition: opacity .35s;
+    }
+    .tt-wrapper:hover { transform: translateY(-6px); border-color: rgba(255,45,120,.3); }
+    .tt-wrapper:hover::before { opacity: 1; }
+    .tt-wrapper.ig-card::before {
+      background: linear-gradient(135deg, rgba(225,48,108,.08), rgba(193,53,132,.08));
+    }
+    .tt-wrapper.ig-card:hover { border-color: rgba(225,48,108,.4); }
+    .tt-icon { width: 58px; height: 58px; }
+    .tt-handle { font-family: 'Bebas Neue', cursive; font-size: 2.4rem; letter-spacing: 3px; }
+    .tt-sub { font-size: .78rem; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,.35); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #111114; border-top: 1px solid rgba(255,255,255,.05);
+      padding: 2.5rem 5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-brand {
+      font-family: 'Bebas Neue', cursive; font-size: 1.4rem; letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--vive-yellow), var(--sfb-pink));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .footer-copy { font-size: .78rem; color: rgba(255,255,255,.28); }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: .78rem; color: rgba(255,255,255,.38); text-decoration: none; transition: color .25s; }
+    .footer-links a:hover { color: #fff; }
+
+    /* ─── COOKIE BANNER ─── */
+    #cookie-banner {
+      position: fixed; bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 9000; width: calc(100% - 3rem); max-width: 780px;
+      background: #1e1e22;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.5);
+      animation: slideUp .4s ease;
+    }
+    @keyframes slideUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+    .cookie-inner { padding: 1.5rem 2rem; }
+    .cookie-top {
+      display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 1.2rem;
+    }
+    .cookie-icon { font-size: 2rem; flex-shrink: 0; line-height: 1; margin-top: .2rem; }
+    .cookie-title {
+      font-family: 'Bebas Neue', cursive; font-size: 1.5rem;
+      letter-spacing: 1.5px; margin-bottom: .4rem;
+    }
+    .cookie-text {
+      font-size: .88rem; color: rgba(255,255,255,.6); line-height: 1.6;
+    }
+    .cookie-text strong { color: rgba(255,255,255,.9); }
+    .cookie-text a { color: var(--sfb-pink); text-decoration: none; }
+    .cookie-text a:hover { text-decoration: underline; }
+    .cookie-actions {
+      display: flex; gap: .8rem; justify-content: flex-end; flex-wrap: wrap;
+    }
+    .cookie-btn {
+      padding: .7rem 1.6rem; font-size: .8rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      border: none; border-radius: 6px; cursor: pointer;
+      transition: all .25s;
+    }
+    .cookie-decline {
+      background: rgba(255,255,255,.08); color: rgba(255,255,255,.7);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .cookie-decline:hover { background: rgba(255,255,255,.14); color: #fff; }
+    .cookie-accept {
+      background: var(--vive-yellow); color: #080808; font-weight: 800;
+    }
+    .cookie-accept:hover { background: #fff0a0; transform: translateY(-1px); }
+    @media (max-width: 600px) {
+      .cookie-inner { padding: 1.2rem 1.2rem; }
+      .cookie-actions { justify-content: stretch; }
+      .cookie-btn { flex: 1; text-align: center; }
+    }
+
+    /* TikTok consent overlay */
+    .tt-consent-overlay {
+      aspect-ratio: 9/16; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1rem; padding: 2rem; text-align: center;
+      background: linear-gradient(160deg, #1e1e22, #12101c);
+      cursor: pointer;
+    }
+    .tt-consent-overlay svg { width: 40px; height: 40px; opacity: .4; }
+    .tt-consent-overlay p { font-size: .82rem; color: rgba(255,255,255,.45); line-height: 1.5; }
+    .tt-consent-overlay button {
+      background: var(--sfb-pink); color: #fff;
+      border: none; border-radius: 6px; padding: .6rem 1.4rem;
+      font-size: .78rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; cursor: pointer; transition: opacity .2s;
+    }
+    .tt-consent-overlay button:hover { opacity: .85; }
+
+    /* ─── TOAST NOTIFICATION ─── */
+    #toast {
+      position: fixed; bottom: 6rem; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: #1e1e1e; border: 1px solid rgba(255,255,255,.1);
+      color: #fff; padding: .9rem 2rem; border-radius: 8px;
+      font-size: .85rem; letter-spacing: .5px;
+      opacity: 0; transition: all .4s ease; pointer-events: none;
+      z-index: 1000; white-space: nowrap;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ─── REVEAL ANIMATIONS ─── */
+    .reveal, .reveal-l, .reveal-r { opacity: 0; transition: opacity .85s ease, transform .85s ease; }
+    .reveal   { transform: translateY(40px); }
+    .reveal-l { transform: translateX(-45px); }
+    .reveal-r { transform: translateX(45px); }
+    .reveal.vis, .reveal-l.vis, .reveal-r.vis { opacity: 1; transform: none; }
+    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; } .d4 { transition-delay: .4s; }
+    .d5 { transition-delay: .55s; }
+
+    /* ─── KEYFRAMES ─── */
+    @keyframes fadeUp  { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+    @keyframes fadeIn  { from { opacity:0; } to { opacity:1; } }
+    @keyframes float   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+    @keyframes scrollPulse { 0%,100%{opacity:.3;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(.65)} }
+
+    /* ─── LOGO STYLES ─── */
+    .hero-logos {
+      display: flex; align-items: center; justify-content: center;
+      gap: 1.5rem; margin-bottom: 2.2rem;
+      opacity: 0; animation: fadeUp .8s .1s forwards;
+      flex-wrap: wrap;
+    }
+    /* Hero logos */
+    .hero-logo-vive {
+      height: 80px; width: auto; border-radius: 10px; display: block;
+      box-shadow: 0 6px 28px rgba(255,230,0,.3);
+    }
+    .hero-logo-sfb {
+      height: 80px; width: auto; display: block;
+      background: #fff; border-radius: 10px; padding: 6px;
+      box-shadow: 0 6px 28px rgba(255,68,204,.3);
+    }
+    .hero-logo-divider {
+      width: 1px; height: 52px; background: rgba(255,255,255,.15);
+    }
+
+    /* VIVE logo in sectie */
+    .vive-logo-wrap { margin-bottom: 2rem; }
+    .vive-logo-img {
+      display: block; height: 110px; width: auto;
+      border-radius: 10px;
+      box-shadow: 0 6px 28px rgba(255,230,0,.2);
+    }
+
+    /* SFB logo in CTA */
+    .sfb-logo-img {
+      width: 160px; height: auto; display: block;
+      margin: 0 auto 1.5rem;
+      background: #fff; border-radius: 12px; padding: 8px;
+      box-shadow: 0 4px 20px rgba(255,68,204,.35);
+    }
+
+    /* Footer logos */
+    .footer-logos { display: flex; align-items: center; gap: 1rem; }
+    .footer-logo-img {
+      height: 38px; width: auto; border-radius: 6px;
+      opacity: .75; transition: opacity .3s, transform .3s;
+    }
+    .footer-logo-img.sfb-footer { background: #fff; padding: 4px; }
+    .footer-logo-img:hover { opacity: 1; transform: scale(1.06); }
+
+    /* Glitch */
+    .glitch { position: relative; }
+    .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top:0; left:0; width:100%; height:100%; }
+    .glitch::before { color: var(--vive-yellow); clip-path: polygon(0 25%,100% 25%,100% 45%,0 45%); animation: g1 4s infinite; }
+    .glitch::after  { color: var(--sfb-pink); clip-path: polygon(0 60%,100% 60%,100% 80%,0 80%); animation: g2 4s infinite; }
+    @keyframes g1 { 0%,88%,100%{transform:none} 90%{transform:translate(-4px,1px)} 93%{transform:translate(4px,-1px)} 96%{transform:translate(-2px,2px)} }
+    @keyframes g2 { 0%,88%,100%{transform:none} 90%{transform:translate(4px,1px)} 93%{transform:translate(-4px,-1px)} 96%{transform:translate(2px,2px)} }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      #navbar, #navbar.scrolled { padding: 1rem 1.8rem; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 6rem 1.8rem; }
+      .stats-band { gap: 2.5rem; padding: 2rem; }
+      .two-col, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .feature-grid { grid-template-columns: 1fr 1fr; }
+      .sfb-cta { padding: 2rem 1.5rem; }
+      .tt-wrapper { padding: 2.5rem 3rem; }
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.8rem; }
+      .footer-links { justify-content: center; }
+      #contact { padding: 6rem 1.8rem; }
+    }
+    @media (max-width: 500px) {
+      .feature-grid { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .tt-wrapper { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress-bar"></div>
+
+<!-- Back to top -->
+<button id="back-top" aria-label="Terug naar boven" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+</button>
+
+<!-- Toast -->
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- Section nav dots -->
+<nav class="nav-dots" aria-label="Secties">
+  <button class="nav-dot active" data-target="hero"    data-label="Top"            aria-label="Naar begin"></button>
+  <button class="nav-dot"        data-target="vive"    data-label="VIVE"           aria-label="Naar VIVE"></button>
+  <button class="nav-dot"        data-target="sfb"     data-label="She Fights Back" aria-label="Naar She Fights Back"></button>
+  <button class="nav-dot"        data-target="contact" data-label="Contact"        aria-label="Naar contact"></button>
+  <button class="nav-dot"        data-target="videos"  data-label="Video's"        aria-label="Naar video's"></button>
+  <button class="nav-dot"        data-target="social"  data-label="Socials"        aria-label="Naar socials"></button>
+</nav>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav id="navbar" role="navigation" aria-label="Hoofdnavigatie">
+  <a href="#hero" class="nav-logo">Michelle Verhoef</a>
+  <ul class="nav-links">
+    <li><a href="#vive"    data-section="vive">VIVE</a></li>
+    <li><a href="#sfb"     data-section="sfb">She Fights Back</a></li>
+    <li><a href="#contact" data-section="contact">Contact</a></li>
+    <li><a href="#sfb-form" class="nav-cta">Doe de enquête</a></li>
+  </ul>
+  <button class="hamburger" id="ham" aria-label="Menu openen" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mob" role="dialog" aria-modal="true" aria-label="Mobiel menu">
+  <button class="mobile-close" id="mob-close" aria-label="Menu sluiten">&times;</button>
+  <a href="#vive"    onclick="closeMob()">VIVE</a>
+  <a href="#sfb"     onclick="closeMob()">She Fights Back</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <a href="#social"  onclick="closeMob()">Socials</a>
+  <a href="#sfb-form" onclick="closeMob()" style="color:var(--sfb-pink)">Enquête</a>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-logos">
+      <img src="/VIVE_logo_white1.jpg" alt="VIVE Boxing Training" class="hero-logo-vive" />
+      <div class="hero-logo-divider"></div>
+      <img src="/SheFightsBack_logo3.jpg" alt="She Fights Back" class="hero-logo-sfb" />
+    </div>
+    <p class="hero-eyebrow">Michelle Verhoef · Trainer &amp; Oprichter</p>
+    <h1 class="hero-title">
+      <span class="line-vive glitch" data-text="VIVE">VIVE</span>
+      <span class="line-amp" aria-hidden="true">&amp;</span>
+      <span class="line-sfb">She Fights<br>Back</span>
+    </h1>
+    <p class="hero-sub">Bokstraining voor iedereen &nbsp;·&nbsp; Zelfverdediging voor vrouwen</p>
+    <div class="hero-btns">
+      <a href="#vive" class="btn btn-red">🥊 Ontdek VIVE</a>
+      <a href="#sfb"  class="btn btn-outline-pink">💪 She Fights Back</a>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════ STATS ═══════════ -->
+<div class="stats-band" role="region" aria-label="Statistieken">
+  <div class="stat reveal d1">
+    <span class="stat-num" data-target="8">0</span>
+    <span class="stat-lbl">Weken traject</span>
+  </div>
+  <div class="stat reveal d2">
+    <span class="stat-num" data-target="100">0</span>
+    <span class="stat-lbl">% voor iedereen</span>
+  </div>
+  <div class="stat reveal d3">
+    <span class="stat-num" data-target="2">0</span>
+    <span class="stat-lbl">Krachtige programma's</span>
+  </div>
+</div>
+
+<!-- ═══════════ VIVE ═══════════ -->
+<section id="vive">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal-l">
+        <div class="vive-logo-wrap">
+          <img src="/VIVE_logo_white1.jpg" alt="VIVE Boxing Training" class="vive-logo-img" />
+        </div>
+        <span class="section-tag">Bokstraining</span>
+        <h2 class="section-title">VIVE</h2>
+        <p class="body-text">
+          VIVE is meer dan boksen — het is een <strong>levensstijl</strong>. Of je nu 18 of 65 bent, nooit gebokst hebt of al jaren traint: bij VIVE is iedereen welkom. Wij geloven dat sport het allerleukst is als je het met <strong>plezier</strong> doet, en dat staat bij ons altijd voorop.
+        </p>
+        <a href="#contact" class="btn btn-red">Neem contact op</a>
+        <div class="feature-grid">
+          <div class="fcard reveal d1">
+            <div class="fcard-icon">🥊</div>
+            <div class="fcard-title">Voor beginners</div>
+            <p class="fcard-text">Geen ervaring? Geen probleem. We starten bij nul.</p>
+          </div>
+          <div class="fcard reveal d2">
+            <div class="fcard-icon">🔥</div>
+            <div class="fcard-title">Voor gevorderden</div>
+            <p class="fcard-text">Intensieve sessies die je naar het volgende level brengen.</p>
+          </div>
+          <div class="fcard reveal d3">
+            <div class="fcard-icon">👥</div>
+            <div class="fcard-title">Alle leeftijden</div>
+            <p class="fcard-text">Jong en oud trainen samen. Iedereen is welkom.</p>
+          </div>
+          <div class="fcard reveal d4">
+            <div class="fcard-icon">💪</div>
+            <div class="fcard-title">Plezier eerst</div>
+            <p class="fcard-text">Sport moet leuk zijn. Dat is en blijft ons uitgangspunt.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-r">
+        <div class="vive-visual">
+          <div class="vive-badge">
+            <span class="vive-badge-big">100%</span>
+            <span class="vive-badge-sub">Voor iedereen</span>
+          </div>
+          <div class="vive-quote">
+            <p>"Je hoeft geen bokser te zijn om te beginnen.<br>Je wordt er één bij ons."</p>
+            <cite>— Michelle Verhoef</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SHE FIGHTS BACK ═══════════ -->
+<section id="sfb">
+  <div class="container">
+    <div class="two-col">
+      <div class="reveal-l">
+        <span class="section-tag sfb-tag">8-weekse cursus · alleen voor vrouwen</span>
+        <h2 class="section-title sfb-title-grad">She Fights<br>Back</h2>
+        <p class="body-text">
+          Elke vrouw verdient het om zich <strong>veilig en zeker</strong> te voelen — op straat, in het ov, overal. In 8 weken gaan we elk aanvalsscenario door zodat jij zelfverzekerder door het leven gaat.
+        </p>
+        <div class="week-list">
+          <div class="witem reveal d1">
+            <span class="wnum">01</span>
+            <div class="wtext"><strong>Bewustwording &amp; houding</strong>Leer je omgeving lezen en straal zelfvertrouwen uit</div>
+          </div>
+          <div class="witem reveal d2">
+            <span class="wnum">02</span>
+            <div class="wtext"><strong>Grenzen stellen &amp; stem</strong>Nee zeggen zonder schuldgevoel — gebruik je stem als wapen</div>
+          </div>
+          <div class="witem reveal d3">
+            <span class="wnum">03</span>
+            <div class="wtext"><strong>Herkennen van gevaar</strong>Rode vlaggen zien voordat het escaleert</div>
+          </div>
+          <div class="witem reveal d4">
+            <span class="wnum">04</span>
+            <div class="wtext"><strong>Mentale weerbaarheid</strong>Omgaan met angst, spanning en onzekerheid</div>
+          </div>
+          <div class="witem reveal d5">
+            <span class="wnum">05–08</span>
+            <div class="wtext"><strong>Fysieke zelfverdediging</strong>Praktische technieken voor elke aanvalsscenario</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-r">
+        <div class="sfb-cta" id="sfb-form">
+          <img src="/SheFightsBack_logo3.jpg" alt="She Fights Back" class="sfb-logo-img" />
+          <span class="section-tag sfb-tag" style="margin-bottom:.5rem;">Nog in ontwikkeling</span>
+          <h3>Help ons het perfect te maken</h3>
+          <p>She Fights Back is momenteel in ontwikkeling. Vul de anonieme enquête in en help ons het traject zo goed mogelijk aan te laten sluiten op wat vrouwen écht nodig hebben.</p>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScR3Bb6IYpPm91GxhJLtGJu8bUpXJ4MMyUniO7kwoYzE1eUww/viewform"
+             target="_blank" rel="noopener" class="btn btn-gradient">
+            Doe de enquête &rarr;
+          </a>
+          <p class="sfb-cta-note">Anoniem &nbsp;·&nbsp; Duurt &plusmn;3 minuten &nbsp;·&nbsp; Maakt echt verschil</p>
+        </div>
+        <div class="sfb-quote reveal d2">
+          <p>"Uit mijn enquête bleek dat het grootste probleem is dat vrouwen zich niet veilig voelen op straat. Daar ga ik iets aan doen."</p>
+          <cite>— Michelle Verhoef</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal-l">
+        <span class="section-tag">Bereikbaarheid</span>
+        <h2 class="section-title">Neem contact<br>op</h2>
+        <p class="body-text">Heb je een vraag over VIVE of She Fights Back? Volg de journey op TikTok of Instagram.</p>
+        <div class="contact-items">
+          <a href="https://www.tiktok.com/@michelle.training?_r=1&_t=ZG-95O7DTKbCiG" target="_blank" rel="noopener" class="citem reveal d1">
+            <span class="citem-icon">🎵</span>
+            <div>
+              <div class="citem-label">TikTok</div>
+              <div class="citem-value">@michelle.training</div>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/reel/DUn1o4ADKw0/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener" class="citem reveal d3">
+            <span class="citem-icon">📸</span>
+            <div>
+              <div class="citem-label">Instagram</div>
+              <div class="citem-value">@michelle.training</div>
+            </div>
+          </a>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLScR3Bb6IYpPm91GxhJLtGJu8bUpXJ4MMyUniO7kwoYzE1eUww/viewform" target="_blank" rel="noopener" class="citem reveal d3">
+            <span class="citem-icon">📋</span>
+            <div>
+              <div class="citem-label">She Fights Back</div>
+              <div class="citem-value">Doe de enquête</div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="reveal-r" style="display:none">
+        <div class="contact-form">
+          <h3>Stuur een bericht</h3>
+          <form id="contact-form" novalidate>
+            <div class="form-group">
+              <label for="cf-name">Naam</label>
+              <input type="text" id="cf-name" name="name" placeholder="Jouw naam" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="cf-email">E-mailadres</label>
+              <input type="email" id="cf-email" name="email" placeholder="naam@voorbeeld.nl" required autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label for="cf-subject">Onderwerp</label>
+              <input type="text" id="cf-subject" name="subject" placeholder="Vraag over VIVE of She Fights Back?" />
+            </div>
+            <div class="form-group">
+              <label for="cf-msg">Bericht</label>
+              <textarea id="cf-msg" name="message" placeholder="Typ hier je bericht…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-red form-submit">Verstuur bericht</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TIKTOK VIDEOS ═══════════ -->
+<section id="videos">
+  <div class="container">
+    <span class="section-tag">@michelle.training</span>
+    <h2 class="section-title reveal">TikTok<br>Video's</h2>
+
+    <div class="videos-grid">
+      <!-- Video 1: Full body workout / boksen -->
+      <div class="video-card reveal d1">
+        <blockquote class="tiktok-embed"
+          cite="https://www.tiktok.com/@michelle.training/video/7621507057342057760"
+          data-video-id="7621507057342057760"
+          data-embed-from="oembed"
+          style="max-width:100%;min-width:0;">
+          <section>
+            <a target="_blank" href="https://www.tiktok.com/@michelle.training?refer=embed">@michelle.training</a>
+          </section>
+        </blockquote>
+      </div>
+
+      <!-- Video 2: She Fights Back / zelfverdediging -->
+      <div class="video-card reveal d2">
+        <blockquote class="tiktok-embed"
+          cite="https://www.tiktok.com/@michelle.training/video/7613022197996637473"
+          data-video-id="7613022197996637473"
+          data-embed-from="oembed"
+          style="max-width:100%;min-width:0;">
+          <section>
+            <a target="_blank" href="https://www.tiktok.com/@michelle.training?refer=embed">@michelle.training</a>
+          </section>
+        </blockquote>
+      </div>
+
+      <!-- Video 3: Full body workout / boksen -->
+      <div class="video-card reveal d3">
+        <blockquote class="tiktok-embed"
+          cite="https://www.tiktok.com/@michelle.training/video/7621507057342057760"
+          data-video-id="7621507057342057760"
+          data-embed-from="oembed"
+          style="max-width:100%;min-width:0;">
+          <section>
+            <a target="_blank" href="https://www.tiktok.com/@michelle.training?refer=embed">@michelle.training</a>
+          </section>
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="videos-cta reveal">
+      <a href="https://www.tiktok.com/@michelle.training?_r=1&_t=ZG-95O7DTKbCiG"
+         target="_blank" rel="noopener" class="btn btn-outline-pink" style="margin-top:1rem;">
+        Bekijk alle video's op TikTok &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+<!-- TikTok embed script wordt conditioneel geladen via JS -->
+
+<!-- ═══════════ SOCIALS ═══════════ -->
+<section id="social">
+  <div class="container">
+    <span class="section-tag">Volg de journey</span>
+    <h2 class="section-title reveal">Volg Michelle</h2>
+    <div class="social-cards">
+      <a href="https://www.tiktok.com/@michelle.training?_r=1&_t=ZG-95O7DTKbCiG" target="_blank" rel="noopener" class="tt-wrapper reveal d1">
+        <svg class="tt-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M27.2 7.73a7.2 7.2 0 0 1-4.96-5.73H17.6v18.2a3.84 3.84 0 0 1-3.84 3.34 3.84 3.84 0 0 1-3.84-3.84 3.84 3.84 0 0 1 3.84-3.84c.38 0 .73.06 1.07.15V11.1a9.6 9.6 0 0 0-1.07-.06A9.76 9.76 0 0 0 3.2 20.8a9.76 9.76 0 0 0 9.76 9.76 9.76 9.76 0 0 0 9.76-9.76V11.5a12.68 12.68 0 0 0 7.4 2.37V9.22a7.22 7.22 0 0 1-2.92-1.49z" fill="white"/>
+        </svg>
+        <span class="tt-handle">@michelle.training</span>
+        <span class="tt-sub">Volg op TikTok</span>
+      </a>
+      <a href="https://www.instagram.com/reel/DUn1o4ADKw0/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener" class="tt-wrapper ig-card reveal d2">
+        <svg class="tt-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2" y="2" width="28" height="28" rx="8" stroke="white" stroke-width="2.2" fill="none"/>
+          <circle cx="16" cy="16" r="6" stroke="white" stroke-width="2.2" fill="none"/>
+          <circle cx="23.5" cy="8.5" r="1.5" fill="white"/>
+        </svg>
+        <span class="tt-handle">@michelle.training</span>
+        <span class="tt-sub">Volg op Instagram</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-logos">
+    <img src="/VIVE_logo_white1.jpg" alt="VIVE" class="footer-logo-img" />
+    <img src="/SheFightsBack_logo3.jpg" alt="She Fights Back" class="footer-logo-img sfb-footer" />
+  </div>
+  <p class="footer-copy">&copy; 2026 &nbsp;·&nbsp; Michelle Verhoef &nbsp;·&nbsp; VIVE &amp; She Fights Back</p>
+  <div class="footer-links">
+    <a href="https://www.tiktok.com/@michelle.training?_r=1&_t=ZG-95O7DTKbCiG" target="_blank" rel="noopener">TikTok</a>
+    <a href="https://www.instagram.com/reel/DUn1o4ADKw0/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" rel="noopener">Instagram</a>
+    <a href="/privacy.html">Privacyverklaring</a>
+    <a href="/algemene-voorwaarden.html">Voorwaarden</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- ═══════════ COOKIE BANNER ═══════════ -->
+<div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Cookie-instellingen" style="display:none;">
+  <div class="cookie-inner">
+    <div class="cookie-top">
+      <span class="cookie-icon">🍪</span>
+      <div>
+        <h3 class="cookie-title">Wij gebruiken cookies</h3>
+        <p class="cookie-text">
+          We gebruiken <strong>noodzakelijke cookies</strong> voor de werking van de site en
+          <strong>functionele cookies</strong> voor ingesloten TikTok-video's. Lees meer in onze
+          <a href="/privacy.html">privacyverklaring</a>.
+        </p>
+      </div>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-decline" id="cookie-decline">Alleen noodzakelijk</button>
+      <button class="cookie-btn cookie-accept" id="cookie-accept">Alles accepteren</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+  /* ── COOKIE CONSENT ── */
+  const COOKIE_KEY = 'mv_cookie_consent';
+  const banner     = document.getElementById('cookie-banner');
+
+  function tiktokConsentOverlay() {
+    const tiktokIcon = `<svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M27.2 7.73a7.2 7.2 0 0 1-4.96-5.73H17.6v18.2a3.84 3.84 0 0 1-3.84 3.34 3.84 3.84 0 0 1-3.84-3.84 3.84 3.84 0 0 1 3.84-3.84c.38 0 .73.06 1.07.15V11.1a9.6 9.6 0 0 0-1.07-.06A9.76 9.76 0 0 0 3.2 20.8a9.76 9.76 0 0 0 9.76 9.76 9.76 9.76 0 0 0 9.76-9.76V11.5a12.68 12.68 0 0 0 7.4 2.37V9.22a7.22 7.22 0 0 1-2.92-1.49z"/></svg>`;
+    document.querySelectorAll('.video-card').forEach(card => {
+      card.innerHTML = `<div class="tt-consent-overlay">
+        ${tiktokIcon}
+        <p>Deze video is van TikTok en laadt externe cookies.<br>Accepteer cookies om de video te bekijken.</p>
+        <button onclick="acceptCookies()">Cookies accepteren</button>
+      </div>`;
+    });
+  }
+
+  function loadTikTok() {
+    if (document.querySelector('script[src*="tiktok.com/embed.js"]')) return;
+    const s = document.createElement('script');
+    s.src = 'https://www.tiktok.com/embed.js';
+    s.async = true;
+    document.body.appendChild(s);
+  }
+
+  function acceptCookies() {
+    localStorage.setItem(COOKIE_KEY, 'all');
+    banner.style.display = 'none';
+    loadTikTok();
+  }
+
+  function declineCookies() {
+    localStorage.setItem(COOKIE_KEY, 'necessary');
+    banner.style.display = 'none';
+    tiktokConsentOverlay();
+  }
+
+  document.getElementById('cookie-accept').addEventListener('click', acceptCookies);
+  document.getElementById('cookie-decline').addEventListener('click', declineCookies);
+
+  // Init on load
+  const consent = localStorage.getItem(COOKIE_KEY);
+  if (!consent) {
+    setTimeout(() => { banner.style.display = 'block'; }, 800);
+  } else if (consent === 'all') {
+    loadTikTok();
+  } else {
+    tiktokConsentOverlay();
+  }
+
+  /* ── CANVAS PARTICLES ── */
+  (function () {
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, pts;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+    function mkPt() {
+      return { x: Math.random()*W, y: Math.random()*H, vx:(Math.random()-.5)*.45, vy:(Math.random()-.5)*.45,
+               r: Math.random()*1.8+.4, o: Math.random()*.35+.08, c: Math.random()>.5?'230,57,70':'255,45,120' };
+    }
+    function init() { resize(); pts = Array.from({length:90}, mkPt); }
+    function draw() {
+      ctx.clearRect(0,0,W,H);
+      for (let i=0;i<pts.length;i++) for (let j=i+1;j<pts.length;j++) {
+        const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+        if (d<140) { ctx.beginPath(); ctx.strokeStyle=`rgba(255,255,255,${.055*(1-d/140)})`; ctx.lineWidth=.5; ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke(); }
+      }
+      pts.forEach(p => {
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(${p.c},${p.o})`; ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    init(); draw(); window.addEventListener('resize', init);
+  })();
+
+  /* ── SCROLL PROGRESS ── */
+  const progressBar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const el = document.documentElement;
+    const pct = (el.scrollTop || document.body.scrollTop) / (el.scrollHeight - el.clientHeight) * 100;
+    progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, {passive:true});
+
+  /* ── BACK TO TOP ── */
+  const backTop = document.getElementById('back-top');
+  window.addEventListener('scroll', () => {
+    backTop.classList.toggle('show', window.scrollY > 400);
+  }, {passive:true});
+
+  /* ── NAVBAR SCROLL ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  }, {passive:true});
+
+  /* ── HERO PARALLAX ── */
+  const heroContent = document.querySelector('.hero-content');
+  window.addEventListener('scroll', () => {
+    const s = window.scrollY;
+    if (s < window.innerHeight) {
+      heroContent.style.transform = `translateY(${s*.28}px)`;
+      heroContent.style.opacity = Math.max(0, 1 - s/520);
+    }
+  }, {passive:true});
+
+  /* ── ACTIVE NAV + DOTS ── */
+  const sections  = ['hero','vive','sfb','contact','videos','social'];
+  const navLinks  = document.querySelectorAll('.nav-links a[data-section]');
+  const navDots   = document.querySelectorAll('.nav-dot');
+
+  navDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const el = document.getElementById(dot.dataset.target);
+      if (el) el.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  const sectionObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const id = e.target.id;
+      navLinks.forEach(a => a.classList.toggle('active', a.dataset.section === id));
+      navDots.forEach(d => d.classList.toggle('active', d.dataset.target === id));
+    });
+  }, {threshold:.35});
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sectionObs.observe(el);
+  });
+
+  /* ── SCROLL REVEAL ── */
+  const revEls = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+  }, {threshold:.12});
+  revEls.forEach(el => revObs.observe(el));
+
+  /* ── COUNTER ── */
+  const counters = document.querySelectorAll('.stat-num[data-target]');
+  const cntObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const target = +e.target.dataset.target;
+      let current = 0; const step = target/55;
+      const suffix = target===100 ? '%' : '+';
+      const tick = setInterval(() => {
+        current += step;
+        if (current >= target) { e.target.textContent = target+suffix; clearInterval(tick); }
+        else { e.target.textContent = Math.floor(current); }
+      }, 22);
+      cntObs.unobserve(e.target);
+    });
+  }, {threshold:.5});
+  counters.forEach(c => cntObs.observe(c));
+
+  /* ── MOBILE MENU ── */
+  const ham     = document.getElementById('ham');
+  const mob     = document.getElementById('mob');
+  const mobClose= document.getElementById('mob-close');
+  function openMob()  { mob.classList.add('open'); ham.classList.add('open'); ham.setAttribute('aria-expanded','true'); }
+  function closeMob() { mob.classList.remove('open'); ham.classList.remove('open'); ham.setAttribute('aria-expanded','false'); }
+  ham.addEventListener('click', () => mob.classList.contains('open') ? closeMob() : openMob());
+  mobClose.addEventListener('click', closeMob);
+  document.addEventListener('keydown', e => { if (e.key==='Escape') closeMob(); });
+
+  /* ── CONTACT FORM ── */
+  const toast = document.getElementById('toast');
+  function showToast(msg, duration=3500) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), duration);
+  }
+
+  document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name  = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    const msg   = document.getElementById('cf-msg').value.trim();
+    if (!name || !email || !msg) { showToast('⚠️ Vul alle verplichte velden in.'); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('⚠️ Vul een geldig e-mailadres in.'); return; }
+
+    // Build mailto link as fallback (no backend)
+    const subject = document.getElementById('cf-subject').value.trim() || 'Bericht via website';
+    const body    = `Naam: ${name}\nE-mail: ${email}\n\n${msg}`;
+    window.location.href = `mailto:info@michelle-verhoef.nl?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    showToast('✅ Je e-mailclient wordt geopend!');
+    this.reset();
+  });
+</script>
+</body>
+</html>
