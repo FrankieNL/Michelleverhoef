@@ -1,0 +1,101 @@
+backend:
+  name: github
+  repo: FrankieNL/Michelleverhoef
+  branch: main
+  auth_type: pkce
+  app_id: VULHIER_JE_CLIENT_ID_IN
+
+media_folder: Public
+public_folder: /Michelleverhoef
+
+collections:
+  - name: instellingen
+    label: Website-inhoud
+    files:
+      - name: content
+        label: Teksten & Links
+        file: Public/content.json
+        fields:
+          - label: "Hero tekst (boven de titel)"
+            name: hero_eyebrow
+            widget: string
+
+          - label: "Hero ondertitel"
+            name: hero_sub
+            widget: string
+
+          - label: "Statistiek 1 – Getal"
+            name: stat_1_num
+            widget: string
+            hint: "Bijv. 8"
+
+          - label: "Statistiek 1 – Label"
+            name: stat_1_lbl
+            widget: string
+
+          - label: "Statistiek 2 – Getal"
+            name: stat_2_num
+            widget: string
+
+          - label: "Statistiek 2 – Label"
+            name: stat_2_lbl
+            widget: string
+
+          - label: "Statistiek 3 – Getal"
+            name: stat_3_num
+            widget: string
+
+          - label: "Statistiek 3 – Label"
+            name: stat_3_lbl
+            widget: string
+
+          - label: "VIVE – Introductietekst"
+            name: vive_intro
+            widget: text
+            hint: "Je mag <strong>vet</strong> gebruiken voor vetgedrukte woorden."
+
+          - label: "VIVE – Citaat"
+            name: vive_quote
+            widget: string
+
+          - label: "She Fights Back – Introductietekst"
+            name: sfb_intro
+            widget: text
+            hint: "Je mag <strong>vet</strong> gebruiken voor vetgedrukte woorden."
+
+          - label: "She Fights Back – CTA Titel"
+            name: sfb_cta_title
+            widget: string
+
+          - label: "She Fights Back – CTA Tekst"
+            name: sfb_cta_body
+            widget: text
+
+          - label: "She Fights Back – Enquête link"
+            name: sfb_survey_url
+            widget: string
+            hint: "De volledige URL van de Google Forms enquête"
+
+          - label: "She Fights Back – Citaat"
+            name: sfb_quote
+            widget: text
+
+          - label: "Contact – Introductietekst"
+            name: contact_intro
+            widget: string
+
+          - label: "TikTok – Profiellink"
+            name: tiktok_url
+            widget: string
+
+          - label: "TikTok – Gebruikersnaam"
+            name: tiktok_handle
+            widget: string
+
+          - label: "Instagram – Profiellink"
+            name: instagram_url
+            widget: string
+
+          - label: "Instagram – Gebruikersnaam"
+            name: instagram_handle
+            widget: string

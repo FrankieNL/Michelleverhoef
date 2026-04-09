@@ -723,13 +723,13 @@
       <div class="hero-logo-divider"></div>
       <img src="/SheFightsBack_logo3.jpg" alt="She Fights Back" class="hero-logo-sfb" />
     </div>
-    <p class="hero-eyebrow">Michelle Verhoef · Trainer &amp; Oprichter</p>
+    <p class="hero-eyebrow" data-cms="hero_eyebrow">Michelle Verhoef · Trainer &amp; Oprichter</p>
     <h1 class="hero-title">
       <span class="line-vive glitch" data-text="VIVE">VIVE</span>
       <span class="line-amp" aria-hidden="true">&amp;</span>
       <span class="line-sfb">She Fights<br>Back</span>
     </h1>
-    <p class="hero-sub">Bokstraining voor iedereen &nbsp;·&nbsp; Zelfverdediging voor vrouwen</p>
+    <p class="hero-sub" data-cms="hero_sub">Bokstraining voor iedereen &nbsp;·&nbsp; Zelfverdediging voor vrouwen</p>
     <div class="hero-btns">
       <a href="#vive" class="btn btn-red">🥊 Ontdek VIVE</a>
       <a href="#sfb"  class="btn btn-outline-pink">💪 She Fights Back</a>
@@ -767,7 +767,7 @@
         </div>
         <span class="section-tag">Bokstraining</span>
         <h2 class="section-title">VIVE</h2>
-        <p class="body-text">
+        <p class="body-text" data-cms="vive_intro">
           VIVE is meer dan boksen — het is een <strong>levensstijl</strong>. Of je nu 18 of 65 bent, nooit gebokst hebt of al jaren traint: bij VIVE is iedereen welkom. Wij geloven dat sport het allerleukst is als je het met <strong>plezier</strong> doet, en dat staat bij ons altijd voorop.
         </p>
         <a href="#contact" class="btn btn-red">Neem contact op</a>
@@ -801,7 +801,7 @@
             <span class="vive-badge-sub">Voor iedereen</span>
           </div>
           <div class="vive-quote">
-            <p>"Je hoeft geen bokser te zijn om te beginnen.<br>Je wordt er één bij ons."</p>
+            <p data-cms="vive_quote">"Je hoeft geen bokser te zijn om te beginnen.<br>Je wordt er één bij ons."</p>
             <cite>— Michelle Verhoef</cite>
           </div>
         </div>
@@ -817,7 +817,7 @@
       <div class="reveal-l">
         <span class="section-tag sfb-tag">8-weekse cursus · alleen voor vrouwen</span>
         <h2 class="section-title sfb-title-grad">She Fights<br>Back</h2>
-        <p class="body-text">
+        <p class="body-text" data-cms="sfb_intro">
           Elke vrouw verdient het om zich <strong>veilig en zeker</strong> te voelen — op straat, in het ov, overal. In 8 weken gaan we elk aanvalsscenario door zodat jij zelfverzekerder door het leven gaat.
         </p>
         <div class="week-list">
@@ -847,16 +847,16 @@
         <div class="sfb-cta" id="sfb-form">
           <img src="/SheFightsBack_logo3.jpg" alt="She Fights Back" class="sfb-logo-img" />
           <span class="section-tag sfb-tag" style="margin-bottom:.5rem;">Nog in ontwikkeling</span>
-          <h3>Help ons het perfect te maken</h3>
-          <p>She Fights Back is momenteel in ontwikkeling. Vul de anonieme enquête in en help ons het traject zo goed mogelijk aan te laten sluiten op wat vrouwen écht nodig hebben.</p>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScR3Bb6IYpPm91GxhJLtGJu8bUpXJ4MMyUniO7kwoYzE1eUww/viewform"
+          <h3 data-cms="sfb_cta_title">Help ons het perfect te maken</h3>
+          <p data-cms="sfb_cta_body">She Fights Back is momenteel in ontwikkeling. Vul de anonieme enquête in en help ons het traject zo goed mogelijk aan te laten sluiten op wat vrouwen écht nodig hebben.</p>
+          <a data-cms-href="sfb_survey_url" href="https://docs.google.com/forms/d/e/1FAIpQLScR3Bb6IYpPm91GxhJLtGJu8bUpXJ4MMyUniO7kwoYzE1eUww/viewform"
              target="_blank" rel="noopener" class="btn btn-gradient">
             Doe de enquête &rarr;
           </a>
           <p class="sfb-cta-note">Anoniem &nbsp;·&nbsp; Duurt &plusmn;3 minuten &nbsp;·&nbsp; Maakt echt verschil</p>
         </div>
         <div class="sfb-quote reveal d2">
-          <p>"Uit mijn enquête bleek dat het grootste probleem is dat vrouwen zich niet veilig voelen op straat. Daar ga ik iets aan doen."</p>
+          <p data-cms="sfb_quote">"Uit mijn enquête bleek dat het grootste probleem is dat vrouwen zich niet veilig voelen op straat. Daar ga ik iets aan doen."</p>
           <cite>— Michelle Verhoef</cite>
         </div>
       </div>
@@ -871,7 +871,7 @@
       <div class="reveal-l">
         <span class="section-tag">Bereikbaarheid</span>
         <h2 class="section-title">Neem contact<br>op</h2>
-        <p class="body-text">Heb je een vraag over VIVE of She Fights Back? Volg de journey op TikTok of Instagram.</p>
+        <p class="body-text" data-cms="contact_intro">Heb je een vraag over VIVE of She Fights Back? Volg de journey op TikTok of Instagram.</p>
         <div class="contact-items">
           <a href="https://www.tiktok.com/@michelle.training?_r=1&_t=ZG-95O7DTKbCiG" target="_blank" rel="noopener" class="citem reveal d1">
             <span class="citem-icon">🎵</span>
@@ -1043,6 +1043,23 @@
     </div>
   </div>
 </div>
+
+<!-- ═══════════ CMS CONTENT LOADER ═══════════ -->
+<script>
+  fetch('/Michelleverhoef/content.json')
+    .then(r => r.json())
+    .then(data => {
+      document.querySelectorAll('[data-cms]').forEach(el => {
+        const key = el.dataset.cms;
+        if (data[key] !== undefined) el.innerHTML = data[key];
+      });
+      document.querySelectorAll('[data-cms-href]').forEach(el => {
+        const key = el.dataset.cmsHref;
+        if (data[key] !== undefined) el.href = data[key];
+      });
+    })
+    .catch(() => {});
+</script>
 
 <!-- ═══════════ SCRIPTS ═══════════ -->
 <script>
