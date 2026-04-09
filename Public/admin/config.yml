@@ -2,8 +2,7 @@ backend:
   name: github
   repo: FrankieNL/Michelleverhoef
   branch: main
-  auth_type: pkce
-  app_id: VULHIER_JE_CLIENT_ID_IN
+  base_url: https://authenticator.sveltia-cms.com
 
 media_folder: Public
 public_folder: /Michelleverhoef
