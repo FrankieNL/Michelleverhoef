@@ -651,19 +651,56 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
       section { padding: 6rem 1.8rem; }
-      .stats-band { gap: 2.5rem; padding: 2rem; }
+      .stats-band { gap: 2rem; padding: 1.8rem; flex-wrap: wrap; }
+      .stat { min-width: 120px; }
       .two-col, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
       .feature-grid { grid-template-columns: 1fr 1fr; }
       .sfb-cta { padding: 2rem 1.5rem; }
       .tt-wrapper { padding: 2.5rem 3rem; }
       footer { flex-direction: column; text-align: center; padding: 2rem 1.8rem; }
-      .footer-links { justify-content: center; }
+      .footer-links { justify-content: center; flex-wrap: wrap; gap: 1rem; }
       #contact { padding: 6rem 1.8rem; }
+      .hero-logos { gap: 1rem; }
+      .hero-logo-vive, .hero-logo-sfb { height: 62px; }
+      .vive-logo-img { height: 80px; }
+      .reveal-r { transform: none; }
+    }
+    @media (max-width: 600px) {
+      .hero-title {
+        font-size: clamp(3.2rem, 16vw, 5.5rem);
+        letter-spacing: 2px;
+      }
+      .hero-eyebrow { letter-spacing: 3px; font-size: .72rem; }
+      .hero-sub { font-size: .95rem; }
+      .section-title { font-size: clamp(2.8rem, 11vw, 4.5rem); }
+      .stat-num { font-size: 2.6rem; }
+      .sfb-cta h3 { font-size: 2.2rem; }
+      .vive-badge-big { font-size: 4.5rem; }
+      .vive-badge { padding: 2rem; }
+      .witem { padding: .85rem 1rem; gap: 1rem; }
+      .wnum { font-size: 1.8rem; min-width: 2.8rem; }
+      .btn { padding: .85rem 1.8rem; font-size: .78rem; }
+      .contact-form { padding: 1.8rem 1.2rem; }
+      .hero-logos { margin-bottom: 1.4rem; }
+      .hero-logo-vive, .hero-logo-sfb { height: 52px; }
     }
     @media (max-width: 500px) {
       .feature-grid { grid-template-columns: 1fr; }
-      .hero-btns { flex-direction: column; align-items: center; }
+      .hero-btns { flex-direction: column; align-items: stretch; }
+      .hero-btns .btn { text-align: center; justify-content: center; }
       .tt-wrapper { padding: 2rem; }
+      .social-cards { flex-direction: column; align-items: center; }
+      .tt-wrapper { width: 100%; max-width: 340px; }
+      .stats-band { justify-content: center; }
+      .sfb-logo-img { width: 120px; }
+      .footer-logos { justify-content: center; }
+    }
+    @media (max-width: 380px) {
+      .hero-title { font-size: clamp(2.8rem, 15vw, 4rem); }
+      .section-title { font-size: clamp(2.4rem, 12vw, 3.5rem); }
+      .hero-logo-vive, .hero-logo-sfb { height: 44px; }
+      .hero-logo-divider { height: 36px; }
+      section { padding: 5rem 1.2rem; }
     }
   </style>
 </head>
