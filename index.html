@@ -937,6 +937,9 @@
         <div class="contact-form">
           <h3>Stuur een bericht</h3>
           <form id="contact-form" novalidate>
+            <input type="hidden" name="access_key" value="6e5fe3b7-eb30-471a-aeb3-e2ca6461e100" />
+            <input type="hidden" name="subject" value="Nieuw bericht via michelleverhoeftraining.nl" />
+            <input type="hidden" name="from_name" value="Website Contact" />
             <div class="form-group">
               <label for="cf-name">Naam</label>
               <input type="text" id="cf-name" name="name" placeholder="Jouw naam" required autocomplete="name" />
@@ -1276,7 +1279,7 @@
     setTimeout(() => toast.classList.remove('show'), duration);
   }
 
-  document.getElementById('contact-form').addEventListener('submit', function(e) {
+  document.getElementById('contact-form').addEventListener('submit', async function(e) {
     e.preventDefault();
     const name  = document.getElementById('cf-name').value.trim();
     const email = document.getElementById('cf-email').value.trim();
@@ -1284,12 +1287,29 @@
     if (!name || !email || !msg) { showToast('⚠️ Vul alle verplichte velden in.'); return; }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('⚠️ Vul een geldig e-mailadres in.'); return; }
 
-    // Build mailto link as fallback (no backend)
-    const subject = document.getElementById('cf-subject').value.trim() || 'Bericht via website';
-    const body    = `Naam: ${name}\nE-mail: ${email}\n\n${msg}`;
-    window.location.href = `mailto:info@michelle-verhoef.nl?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    showToast('✅ Je e-mailclient wordt geopend!');
-    this.reset();
+    const btn = this.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = 'Versturen…';
+
+    const data = new FormData(this);
+    const subject = document.getElementById('cf-subject').value.trim();
+    if (subject) data.set('subject', subject);
+
+    try {
+      const res  = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: data });
+      const json = await res.json();
+      if (json.success) {
+        showToast('✅ Bericht verzonden! We nemen snel contact op.');
+        this.reset();
+      } else {
+        showToast('❌ Er ging iets mis. Probeer het opnieuw.');
+      }
+    } catch {
+      showToast('❌ Geen verbinding. Controleer je internet.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Verstuur bericht';
+    }
   });
 </script>
 </body>
