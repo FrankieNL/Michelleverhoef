@@ -5,7 +5,7 @@ backend:
   base_url: https://authenticator.sveltia-cms.com
 
 media_folder: Public
-public_folder: /Michelleverhoef
+public_folder: /
 
 collections:
   - name: instellingen

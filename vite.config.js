@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/Michelleverhoef/',
+  base: '/',
   publicDir: 'Public',
   server: {
     port: 5173,
