@@ -3,12 +3,87 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Michelle Verhoef | VIVE & She Fights Back</title>
+  <title>Michelle Verhoef | VIVE Bokstraining & She Fights Back – Zelfverdediging voor Vrouwen</title>
   <link rel="icon" type="image/jpeg" href="/VIVE_logo2.jpg" />
-  <meta name="description" content="VIVE bokstraining voor iedereen en She Fights Back — 8-weekse zelfverdedigingscursus voor vrouwen. Door Michelle Verhoef." />
+  <meta name="description" content="VIVE bokstraining voor iedereen én She Fights Back — 6-weeks weerbaarheidstraject voor vrouwen. Door Michelle Verhoef, trainer in Nederland." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://michelleverhoeftraining.nl/" />
+
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://michelleverhoeftraining.nl/" />
+  <meta property="og:locale"      content="nl_NL" />
+  <meta property="og:site_name"   content="Michelle Verhoef Training" />
+  <meta property="og:title"       content="Michelle Verhoef | VIVE Bokstraining & She Fights Back" />
+  <meta property="og:description" content="VIVE bokstraining voor iedereen én She Fights Back — 6-weeks weerbaarheidstraject voor vrouwen. Door Michelle Verhoef." />
+  <meta property="og:image"       content="https://michelleverhoeftraining.nl/og-image.jpg" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt"   content="Michelle Verhoef – VIVE Bokstraining & She Fights Back" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="Michelle Verhoef | VIVE Bokstraining & She Fights Back" />
+  <meta name="twitter:description" content="VIVE bokstraining voor iedereen én She Fights Back — 6-weeks weerbaarheidstraject voor vrouwen." />
+  <meta name="twitter:image"       content="https://michelleverhoeftraining.nl/og-image.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Structured Data – JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://michelleverhoeftraining.nl/#michelle",
+        "name": "Michelle Verhoef",
+        "jobTitle": "Personal Trainer & Oprichter",
+        "url": "https://michelleverhoeftraining.nl/",
+        "sameAs": [
+          "https://www.tiktok.com/@michelle.training",
+          "https://www.instagram.com/michelle.training"
+        ]
+      },
+      {
+        "@type": "SportsActivityLocation",
+        "@id": "https://michelleverhoeftraining.nl/#vive",
+        "name": "VIVE Bokstraining",
+        "description": "Bokstraining voor iedereen — van beginner tot gevorderde. VIVE staat voor plezier, kracht en inclusiviteit.",
+        "url": "https://michelleverhoeftraining.nl/#vive",
+        "founder": { "@id": "https://michelleverhoeftraining.nl/#michelle" },
+        "sport": "Boksen",
+        "audience": { "@type": "Audience", "audienceType": "Iedereen" }
+      },
+      {
+        "@type": "Course",
+        "@id": "https://michelleverhoeftraining.nl/#sfb",
+        "name": "She Fights Back – Weerbaarheidstraject",
+        "description": "6-weeks weerbaarheidstraject voor vrouwen. Grenzen aangeven, zelfverdediging, mentale kracht en zelfvertrouwen.",
+        "url": "https://michelleverhoeftraining.nl/#sfb",
+        "provider": { "@id": "https://michelleverhoeftraining.nl/#michelle" },
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "Onsite",
+          "duration": "P6W",
+          "inLanguage": "nl"
+        },
+        "audience": { "@type": "Audience", "audienceType": "Vrouwen" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://michelleverhoeftraining.nl/#website",
+        "url": "https://michelleverhoeftraining.nl/",
+        "name": "Michelle Verhoef Training",
+        "description": "VIVE bokstraining voor iedereen en She Fights Back — 6-weeks weerbaarheidstraject voor vrouwen.",
+        "inLanguage": "nl",
+        "publisher": { "@id": "https://michelleverhoeftraining.nl/#michelle" }
+      }
+    ]
+  }
+  </script>
+
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -886,8 +961,7 @@
           <span class="section-tag sfb-tag" style="margin-bottom:.5rem;">Nog in ontwikkeling</span>
           <h3 data-cms="sfb_cta_title">Help ons het perfect te maken</h3>
           <p data-cms="sfb_cta_body">She Fights Back is momenteel in ontwikkeling. Vul de anonieme enquête in en help ons het traject zo goed mogelijk aan te laten sluiten op wat vrouwen écht nodig hebben.</p>
-          <a data-cms-href="sfb_survey_url" href="https://docs.google.com/forms/d/e/1FAIpQLScR3Bb6IYpPm91GxhJLtGJu8bUpXJ4MMyUniO7kwoYzE1eUww/viewform"
-             target="_blank" rel="noopener" class="btn btn-gradient">
+          <a href="/enquete.html" class="btn btn-gradient">
             Doe de enquête &rarr;
           </a>
           <p class="sfb-cta-note">Anoniem &nbsp;·&nbsp; Duurt &plusmn;3 minuten &nbsp;·&nbsp; Maakt echt verschil</p>
@@ -924,7 +998,7 @@
               <div class="citem-value">@michelle.training</div>
             </div>
           </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLScR3Bb6IYpPm91GxhJLtGJu8bUpXJ4MMyUniO7kwoYzE1eUww/viewform" target="_blank" rel="noopener" class="citem reveal d3">
+          <a href="/enquete.html" class="citem reveal d3">
             <span class="citem-icon">📋</span>
             <div>
               <div class="citem-label">She Fights Back</div>
@@ -1108,6 +1182,12 @@
   const COOKIE_KEY = 'mv_cookie_consent';
   const banner     = document.getElementById('cookie-banner');
 
+  // Save original video card HTML so we can restore blockquotes after consent
+  const _originalCards = new Map();
+  document.querySelectorAll('.video-card').forEach((card, i) => {
+    _originalCards.set(i, card.innerHTML);
+  });
+
   function tiktokConsentOverlay() {
     const tiktokIcon = `<svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M27.2 7.73a7.2 7.2 0 0 1-4.96-5.73H17.6v18.2a3.84 3.84 0 0 1-3.84 3.34 3.84 3.84 0 0 1-3.84-3.84 3.84 3.84 0 0 1 3.84-3.84c.38 0 .73.06 1.07.15V11.1a9.6 9.6 0 0 0-1.07-.06A9.76 9.76 0 0 0 3.2 20.8a9.76 9.76 0 0 0 9.76 9.76 9.76 9.76 0 0 0 9.76-9.76V11.5a12.68 12.68 0 0 0 7.4 2.37V9.22a7.22 7.22 0 0 1-2.92-1.49z"/></svg>`;
     document.querySelectorAll('.video-card').forEach(card => {
@@ -1119,8 +1199,21 @@
     });
   }
 
+  function restoreVideoCards() {
+    document.querySelectorAll('.video-card').forEach((card, i) => {
+      if (_originalCards.has(i)) card.innerHTML = _originalCards.get(i);
+    });
+  }
+
   function loadTikTok() {
-    if (document.querySelector('script[src*="tiktok.com/embed.js"]')) return;
+    const existing = document.querySelector('script[src*="tiktok.com/embed.js"]');
+    if (existing) {
+      // Script already loaded: ask TikTok to re-scan for new blockquotes
+      if (window.tiktok && window.tiktok.embed) {
+        window.tiktok.embed.initialize();
+      }
+      return;
+    }
     const s = document.createElement('script');
     s.src = 'https://www.tiktok.com/embed.js';
     s.async = true;
@@ -1130,6 +1223,7 @@
   function acceptCookies() {
     localStorage.setItem(COOKIE_KEY, 'all');
     banner.style.display = 'none';
+    restoreVideoCards();
     loadTikTok();
   }
 
