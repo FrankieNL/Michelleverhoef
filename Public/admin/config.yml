@@ -2,7 +2,8 @@ backend:
   name: github
   repo: FrankieNL/Michelleverhoef
   branch: main
-  base_url: https://authenticator.sveltia-cms.com
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
 
 media_folder: Public
 public_folder: /
